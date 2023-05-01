@@ -1,11 +1,14 @@
 package com.example.calculator_;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.material.button.MaterialButton;
 
 import java.text.DecimalFormat;
 
@@ -15,17 +18,29 @@ public class MainActivity extends AppCompatActivity {
     private Double first, second, result;
     private Boolean isOperationClick;
     private String operation;
+    private MaterialButton next_menu;
 
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        next_menu = findViewById(R.id.next_menu);
+
+        next_menu.setOnClickListener(view -> {
+            Intent intent = new Intent(MainActivity.this, SecondActivity.class);
+            String result = ((TextView) findViewById(R.id.text_view)).getText().toString();
+            intent.putExtra("key",result);
+            startActivity(intent);
+
+
+        });
 
         textView = findViewById(R.id.text_view);
     }
 
     private void AppendNumber(String number) {
+        next_menu.setVisibility(View.INVISIBLE);
         if (textView.getText().toString().equals("0") || isOperationClick) {
             textView.setText(number);
         } else {
@@ -138,7 +153,7 @@ public class MainActivity extends AppCompatActivity {
                             result = first +- second;
                             break;
                         case "%":
-                            result = first %- second;
+                            result = first % second;
                             break;
                         case "+":
                             result = first + second;
@@ -155,10 +170,19 @@ public class MainActivity extends AppCompatActivity {
 
                     }
                     textView.setText(new DecimalFormat("###.####").format(result));
+
+                    next_menu.setVisibility(view.getVisibility());
                 }
+
+
 
                 isOperationClick = true;
 
         }
     }
+
+    public void onPercentClick(View view) {
+        textView.setText(Double.toString(Double.valueOf(textView.getText().toString()) * 0.01));
+    }
+
 }
