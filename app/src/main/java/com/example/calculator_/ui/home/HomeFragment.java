@@ -29,10 +29,10 @@ public class HomeFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-//        btn = requireActivity().findViewById(R.id.btn_CSV);
-//        btn.setOnClickListener(view1 -> {
-//            getActivity().finishAffinity();
-//        });
+        btn = requireActivity().findViewById(R.id.btn_CSV);
+        btn.setOnClickListener(view1 -> {
+            getActivity().finishAffinity();
+        });
     }
 
     @Override
